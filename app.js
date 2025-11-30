@@ -1,8 +1,8 @@
-import React, { useState } from "https://esm.sh/react@19";
+import React, { useState, useEffect } from "https://esm.sh/react@19";
 import ReactDOM from "https://esm.sh/react-dom@19/client";
 
 function OurHeader() {
-  return React.createElement('h1', { className: 'special' }, 'Our Amazing App Header');
+  return React.createElement('h1', { className: 'special' }, 'App Header');
 }
 
 function Pet(props) {
@@ -33,6 +33,7 @@ function LikeArea() {
     React.Fragment,
     null,
     React.createElement('button', { onClick: increaseLikeHandler }, 'Increase likes'),
+    React.createElement('span', { style: { margin: '0 10px' } }, ''),
     React.createElement('button', { onClick: decreaseLikeHandler }, 'Decrease likes'),
     React.createElement('h2', null, `This page has been liked ${likeCount} times.`)
   );
@@ -41,11 +42,14 @@ function LikeArea() {
 function TimeArea() {
   const [theTime, setTheTime] = useState(new Date().toLocaleString());
 
-  setTimeout(function () {
-    setTheTime(new Date().toLocaleString());
-  }, 1000);
+  useEffect(() => {
+    const id = setInterval(() => {
+      setTheTime(new Date().toLocaleString());
+    }, 1000);
+    return () => clearInterval(id);
+  }, []);
 
-  return React.createElement('p', null, `The current time is ${theTime}.`);
+  return React.createElement('p', { 'aria-live': 'polite' }, `The current time is ${theTime}.`);
 }
 
 function AddPetForm(props) {
@@ -70,9 +74,27 @@ function AddPetForm(props) {
       'fieldset',
       null,
       React.createElement('legend', null, 'Add New Pet'),
-      React.createElement('input', { value: name, onChange: e => setName(e.target.value), placeholder: 'Name' }),
-      React.createElement('input', { value: species, onChange: e => setSpecies(e.target.value), placeholder: 'species' }),
-      React.createElement('input', { value: age, onChange: e => setAge(e.target.value), placeholder: 'age in years' }),
+      React.createElement('input', {
+        name: 'pet-name',
+        'aria-label': 'Pet name',
+        value: name,
+        onChange: e => setName(e.target.value),
+        placeholder: 'Name'
+      }),
+      React.createElement('input', {
+        name: 'pet-species',
+        'aria-label': 'Pet species',
+        value: species,
+        onChange: e => setSpecies(e.target.value),
+        placeholder: 'species'
+      }),
+      React.createElement('input', {
+        name: 'pet-age',
+        'aria-label': 'Pet age in years',
+        value: age,
+        onChange: e => setAge(e.target.value),
+        placeholder: 'age in years'
+      }),
       React.createElement('button', null, 'Add Pet')
     )
   );
@@ -80,11 +102,7 @@ function AddPetForm(props) {
 
 function OurApp() {
   const [pets, setPets] = useState([
-    { name: 'Meowsalot', species: 'cat', age: '5', id: 123456789 },
-    { name: 'Barksalot', species: 'dog', age: '3', id: 987654321 },
-    { name: 'Fluffy', species: 'rabbit', age: '2', id: 123123123 },
-    { name: 'Purrsloud', species: 'cat', age: '1', id: 456456456 },
-    { name: 'Paws', species: 'dog', age: '6', id: 789789789 }
+    
   ]);
 
   return React.createElement(

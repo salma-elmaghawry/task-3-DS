@@ -1,3 +1,109 @@
 .special {
-  color: orange;
+  color: var(--accent);
 }
+
+:root {
+  --bg: linear-gradient(180deg,#f7fbff 0%, #eef6ff 100%);
+  --surface: #ffffff;
+  --muted: #6b7280;
+  --accent: #5cb97e; /* emerald green */
+  --glass: rgba(255,255,255,0.6);
+  --shadow: 0 6px 18px rgba(16,24,40,0.08);
+  --radius: 12px;
+  --max-width: 900px;
+}
+
+* { box-sizing: border-box; }
+html,body { height:100%; }
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  background: var(--bg);
+  color: #0f172a;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  padding: 32px 20px;
+}
+
+.app-container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.8));
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(6px);
+}
+
+h1.special {
+  margin: 0 0 12px 0;
+  font-size: 1.75rem;
+  letter-spacing: -0.5px;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+button {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(16,163,82,0.12);
+}
+
+button.secondary {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid rgba(16,163,82,0.08);
+  box-shadow: none;
+}
+
+form fieldset {
+  border: 1px solid rgba(15,23,42,0.04);
+  padding: 14px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+
+input[type="text"], input[placeholder] {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(15,23,42,0.06);
+  margin-right: 8px;
+  outline: none;
+}
+
+ul.pet-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+ul.pet-list li {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 14px;
+  box-shadow: 0 8px 24px rgba(15,23,42,0.04);
+  border: 1px solid rgba(15,23,42,0.02);
+}
+
+small { color: var(--muted); display:block; margin-top:12px }
+
+@media (max-width:520px){
+  .controls{flex-direction:column;align-items:stretch}
+  input[type="text"], input[placeholder]{margin-bottom:8px;width:100%}
+}
+
+/* subtle focus states */
+input:focus, button:focus { box-shadow: 0 0 0 4px rgba(16,163,82,0.08); }
